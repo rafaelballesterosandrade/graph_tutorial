@@ -1,0 +1,35 @@
+<!-- Copyright (c) Microsoft Corporation.
+     Licensed under the MIT License. -->
+
+<!-- <CalendarSnippet> -->
+{% extends "tutorial/layout.html" %}
+{% block content %}
+<h1>Datos del usuario:</h1>
+{% if user %}
+  <p>is_authenticated: {{ user.is_authenticated }}</p></p>
+  <p>name: {{ user.name }}</p>
+  <p>email: {{ user.email }}</p></p>
+    
+{% endif %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Etiqueta</th>
+      <th scope="col">Dato</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if users %}
+      
+      {% for k,v in users %}
+        <tr>
+          <td>{{ k }}</td>
+          <td>{{ v }}</td>          
+        </tr>
+      
+      {% endfor %}
+    {% endif %}
+  </tbody>
+</table>
+{% endblock %}
+<!-- </CalendarSnippet> -->

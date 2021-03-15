@@ -1,0 +1,32 @@
+<!-- Copyright (c) Microsoft Corporation.
+     Licensed under the MIT License. -->
+
+<!-- <CalendarSnippet> -->
+{% extends "tutorial/layout.html" %}
+{% block content %}
+<h1>Lista de usuarios</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Organizer</th>
+      <th scope="col">Subject</th>
+      <th scope="col">Start</th>
+      <th scope="col">Start</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    {% if users %}
+      {% for item in users %}
+        <tr>
+          <td>{{ item }}</td>
+          <td>{{ item.value }}</td>
+          <td>{{ item.value.mailNickname }}</td>
+          <td>{{ item.value.userPrincipalName }}</td>
+        </tr>
+      {% endfor %}
+    {% endif %}
+  </tbody>
+</table>
+{% endblock %}
+<!-- </CalendarSnippet> -->
