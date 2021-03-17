@@ -36,7 +36,7 @@ def get_user_list(token):
   # Send GET to /me
   #users = graph_client.get('{0}/users'.format(graph_url))
   url_temp = '{0}/users?$count=true&$search="displayName:Rafael"&$filter=endsWith(mail,'+"'usalesiana.edu.bo')&$orderBy=displayName&$select=id,displayName,mail"
-  print('//////////////////////////////////////////////////////////////')
+  print('////////////////// LISTA ////////////////////////////////////////////')
   print(url_temp)
   users = graph_client.get(url_temp.format(graph_url))
 
@@ -50,3 +50,44 @@ def get_user_dato(token):
   # Return the JSON result
   return users.json()
 
+def get_user_new(token):
+  new_user = {
+    'accountEnabled': true,
+    'city': 'Seattle',
+    'country': 'United States',
+    'department': 'Sales & Marketing',
+    'displayName': 'Melissa Darrow',
+    'givenName': 'Melissa',
+    'jobTitle': 'Marketing Director',
+    'mailNickname': 'MelissaD',
+    'passwordPolicies': 'DisablePasswordExpiration',
+    'passwordProfile': {
+        'password': 'fe472207-f759-b923-99d8-87cd01bba1d1',
+        'forceChangePasswordNextSignIn': false
+    },
+    'officeLocation': '131/1105',
+    'postalCode': '98052',
+    'preferredLanguage': 'en-US',
+    'state': 'WA',
+    'streetAddress': '9256 Towne Center Dr., Suite 400',
+    'surname': 'Darrow',
+    'mobilePhone': '+1 206 555 0110',
+    'usageLocation': 'US',
+    'userPrincipalName': 'MelissaD@usalesiana.edu.bo'
+  }
+
+  # Set headers
+  headers = {
+    'Authorization': 'Bearer {0}'.format(token),
+    'Content-Type': 'application/json'
+  }
+
+  requests.post('{0}/me/events'.format(graph_url),
+    headers=headers,
+    data=json.dumps(new_user))
+    
+
+
+
+
+  

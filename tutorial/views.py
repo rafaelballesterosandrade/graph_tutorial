@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from tutorial.auth_helper import get_sign_in_url, get_token_from_code, store_token, store_user, remove_user_and_token, get_token
-from tutorial.graph_helper import get_user, get_calendar_events, get_user_list, get_user_dato
+from tutorial.graph_helper import get_user, get_calendar_events, get_user_list, get_user_dato, get_user_new
 import dateutil.parser
 
 # <HomeViewSnippet>
@@ -148,3 +148,41 @@ def usuario_nuevo(request):
   return render(request, 'tutorial/usuario_nuevo.html', context)
 # </Nuevo usuario>
 
+def newuser(request):
+  context = initialize_context(request)
+  user = context['user']
+
+  if request.method == 'POST':
+    # Validate the form values
+    # Required values
+    if (not request.POST['accountEnabled']) or \
+       (not request.POST['city']) or \
+       (not request.POST['country']) or \
+       (not request.POST['department']) or \
+       (not request.POST['displayName']) or \
+       (not request.POST['givenName']) or \
+       (not request.POST['jobTitle']) or \
+       (not request.POST['mailNicknamet']):
+      context['errors'] = [
+        { 'message': 'Invalid values', 'debug': 'The subject, start, and end fields are required.'}
+      ]
+      return render(request, 'tutorial/usuario_nuevo.html', context)
+
+    # Create the event
+    token = get_token(request)
+
+    create_user(
+      token,
+      request.POST['ev-subject'],
+      request.POST['ev-start'],
+      request.POST['ev-end'],
+      attendees,
+      request.POST['ev-body'],
+      user['timeZone'])
+
+    # Redirect back to calendar view
+    return HttpResponseRedirect(reverse('calendar'))
+  else:
+    # Render the form
+    return render(request, 'tutorial/newevent.html', context)
+  print('hello')
